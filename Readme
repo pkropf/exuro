@@ -1,0 +1,12 @@
+Eyes
+----
+
+Arduino based servo control of 4 motors to move a pair of gimbal based eyes.
+
+
+Other Notes
+===========
+
+Using Hextronik HX5010 servos. Orange is control, red is power and brown is ground.
+
+The code running on the Arduino board and the Python code interfacing with it were originally based on the work of Brian D. Wendt at http://principialabs.com/. The code came from his project at: http://principialabs.com/arduino-python-4-axis-servo-control/.
