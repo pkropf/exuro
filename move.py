@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 
-from servo import Servo
+from commands import Servo
 from time import sleep
 
 

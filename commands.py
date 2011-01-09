@@ -14,16 +14,36 @@
 import serial
 
 
-class Servo(object):
+class Command(object):
     def __init__(self, pin, port):
-        self.pin = pin
-        self.port = port
+        self.pin    = pin
+        self.port   = port
         self.serial = None
-        self.setup()
-
-    def setup(self):
+        self.reset_serial()
+    
+    def reset_serial(self):
         self.serial = serial.Serial(self.port, 9600, timeout=1)
         #print self.serial
+        
+
+class Blink(Command):
+    def __init__(self, pin, port):
+        super(Blink, self).__init__(pin, port) 
+
+    def blink(self, count):
+        try:
+            self.serial.write(chr(255))         # header, start of a new command set
+            self.serial.write(chr(0))           # command to blink an led
+            self.serial.write(chr(self.pin))    # connected to pin
+            self.serial.write(chr(count))       # this many times
+
+        except serial.serialutil.SerialException:
+            self.reset_serial()
+
+
+class Servo(Command):
+    def __init__(self, pin, port):
+        super(Servo, self).__init__(pin, port)
 
     def move(self, angle):
         try:
@@ -37,4 +57,4 @@ class Servo(object):
                 raise ValueError, "Servo angle must be an integer between 0 and 180."
 
         except serial.serialutil.SerialException:
-            self.setup()
+            self.reset_serial()
