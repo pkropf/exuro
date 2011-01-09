@@ -28,9 +28,10 @@ class Servo(object):
     def move(self, angle):
         try:
             if (0 <= angle <= 180):
-                self.serial.write(chr(255))
-                self.serial.write(chr(self.pin))
-                self.serial.write(chr(angle))
+                self.serial.write(chr(255))         # header, start of a new command set
+                self.serial.write(chr(1))           # command to move the servo
+                self.serial.write(chr(self.pin))    # connected to pin
+                self.serial.write(chr(angle))       # to this angle
 
             else:
                 raise ValueError, "Servo angle must be an integer between 0 and 180."
