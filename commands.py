@@ -12,49 +12,47 @@
 
 
 import serial
+import time
 
 
 class Command(object):
-    def __init__(self, pin, port):
-        self.pin    = pin
-        self.port   = port
-        self.serial = None
+    def __init__(self, command, pin, port):
+        self.command    = command
+        self.pin        = pin
+        self.port       = port
+        self.serial     = None
+        self.last_reset = 0
+
         self.reset_serial()
-    
+
+
     def reset_serial(self):
         self.serial = serial.Serial(self.port, 9600, timeout=1)
-        #print self.serial
-        
+        self.last_reset = time.time()
+        #print self.serial, self.last_reset
 
-class Blink(Command):
-    def __init__(self, pin, port):
-        super(Blink, self).__init__(pin, port) 
 
-    def blink(self, count):
+    def send(self, parm):
         try:
-            self.serial.write(chr(255))         # header, start of a new command set
-            self.serial.write(chr(0))           # command to blink an led
-            self.serial.write(chr(self.pin))    # connected to pin
-            self.serial.write(chr(count))       # this many times
+            duration = time.time() - self.last_reset # it takes around 2 seconds for the arduino be become ready after
+            if duration < 2:                         # serial communications have been established. so make sure it's
+                time.sleep(2 - duration)             # been at least 2 seconds before the last reset.
+
+            self.serial.write(chr(255))          # header, start of a new command set
+            self.serial.write(chr(self.command)) # with our command code
+            self.serial.write(chr(self.pin))     # connected to pin
+            self.serial.write(chr(parm))         # with this parameter
 
         except serial.serialutil.SerialException:
             self.reset_serial()
+
+
+
+class Blink(Command):
+    def __init__(self, pin, port):
+        super(Blink, self).__init__(0, pin, port) 
 
 
 class Servo(Command):
     def __init__(self, pin, port):
-        super(Servo, self).__init__(pin, port)
-
-    def move(self, angle):
-        try:
-            if (0 <= angle <= 180):
-                self.serial.write(chr(255))         # header, start of a new command set
-                self.serial.write(chr(1))           # command to move the servo
-                self.serial.write(chr(self.pin))    # connected to pin
-                self.serial.write(chr(angle))       # to this angle
-
-            else:
-                raise ValueError, "Servo angle must be an integer between 0 and 180."
-
-        except serial.serialutil.SerialException:
-            self.reset_serial()
+        super(Servo, self).__init__(1, pin, port)
