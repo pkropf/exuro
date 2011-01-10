@@ -22,6 +22,7 @@ class Command(object):
         self.port       = port
         self.serial     = None
         self.last_reset = 0
+        self.check_msg  = None
 
         self.reset_serial()
 
@@ -33,6 +34,9 @@ class Command(object):
 
 
     def send(self, parm):
+        if not self.check(parm):
+            raise ValueError, self.check_msg
+
         try:
             duration = time.time() - self.last_reset # it takes around 2 seconds for the arduino be become ready after
             if duration < 2:                         # serial communications have been established. so make sure it's
@@ -46,6 +50,9 @@ class Command(object):
         except serial.serialutil.SerialException:
             self.reset_serial()
 
+    def check(self, parm):
+        return True
+
 
 
 class Blink(Command):
@@ -53,6 +60,18 @@ class Blink(Command):
         super(Blink, self).__init__(0, pin, port) 
 
 
+
 class Servo(Command):
     def __init__(self, pin, port):
         super(Servo, self).__init__(1, pin, port)
+        self.check_msg = 'Servo angle must be an integer between 0 and 180.'
+
+
+    def check(self, parm):
+        return 0 <= parm <= 180
+
+
+
+class Pin(Command):
+    def __init__(self, pin, port):
+        super(Servo, self).__init__(4, pin, port)

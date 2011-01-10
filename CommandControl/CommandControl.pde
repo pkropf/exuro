@@ -10,6 +10,7 @@
 
 #define SERVO_COUNT   4
 #define LED_COUNT     1
+#define PIN_COUNT     4
 
 #define CMD_BLINK           0  // blink an led
 #define CMD_SERVO           1  // move a servo
@@ -67,7 +68,7 @@ void set_led(int pin, int blinks)
       if (led_pin[i] == -1) {
         led_pin[i] = pin;
         led_counter[i] = blinks;
-        pinMode(pin, OUTPUT);      
+        pinMode(pin, OUTPUT);
         break;
       }
     }
@@ -150,9 +151,12 @@ void loop()
           case CMD_SERVO:
             move_servo(parm1, parm2);
             break;
+          case CMD_PIN:
+            pinMode(parm1, OUTPUT);
+            digitalWrite(parm1, parm2 == 0 ? LOW : HIGH);
+            break;
           case CMD_REGISTER_SWITCH:
           case CMD_READ_SWITCH:
-          case CMD_PIN:
             break;
       }
     }
