@@ -14,15 +14,17 @@
 import serial
 import time
 
+_time_reset = 2.0      # how long does it take for the arduino to reset
+
 
 class Command(object):
     def __init__(self, command, pin, port):
-        self.command    = command
-        self.pin        = pin
-        self.port       = port
-        self.serial     = None
-        self.last_reset = 0
-        self.check_msg  = None
+        self.command      = command
+        self.pin          = pin
+        self.port         = port
+        self.serial       = None
+        self.last_reset   = 0
+        self.check_msg    = None
 
         self.reset_serial()
 
@@ -39,15 +41,17 @@ class Command(object):
 
         try:
             duration = time.time() - self.last_reset # it takes around 2 seconds for the arduino be become ready after
-            if duration < 2:                         # serial communications have been established. so make sure it's
-                time.sleep(2 - duration)             # been at least 2 seconds before the last reset.
+            if duration < _time_reset:               # serial communications have been established. so make sure it's
+                time.sleep(_time_reset - duration)             # been at least 2 seconds before the last reset.
 
             self.serial.write(chr(255))          # header, start of a new command set
             self.serial.write(chr(self.command)) # with our command code
             self.serial.write(chr(self.pin))     # connected to pin
             self.serial.write(chr(parm))         # with this parameter
+            self.last_message = time.time()
 
         except serial.serialutil.SerialException:
+            time.sleep(_time_reset)
             self.reset_serial()
 
     def check(self, parm):
@@ -62,9 +66,19 @@ class Blink(Command):
 
 
 class Servo(Command):
-    def __init__(self, pin, port):
+    def __init__(self, pin, port, pause = 0.1):
         super(Servo, self).__init__(1, pin, port)
-        self.check_msg = 'Servo angle must be an integer between 0 and 180.'
+        self.check_msg    = 'Servo angle must be an integer between 0 and 180.'
+        self.last_message = 0      # when the last message was sent
+        self.pause        = pause  # how long to wait before sending the next servo
+
+
+    def send(self, parm):
+        duration = time.time() - self.last_message
+        if duration < self.pause:
+            time.sleep(self.pause - duration)
+
+        super(Servo, self).send(parm)
 
 
     def check(self, parm):
