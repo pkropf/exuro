@@ -36,8 +36,11 @@ int parm1;           // command parameter 1
 int parm2;           // command parameter 2
 int i;               // iterator
 
+int relay_pin = 4;
+int relay_state = LOW;
 
-void setup() 
+
+void setup()
 {
   Serial.begin(9600);                    // setup the serial port for communications with the host computer
 
@@ -49,6 +52,12 @@ void setup()
     led_pin[i] = -1;
     led_counter[i] = 0;
   }
+
+  pinMode(relay_pin, OUTPUT);
+  attachInterrupt(0, toggle_relay2, CHANGE);
+  // attachInterrupt(0, toggle_relay, CHANGE);
+  // attachInterrupt(0, relay_on, RISING);
+  // attachInterrupt(0, relay_off, FALLING);
 } 
 
 
@@ -124,6 +133,35 @@ void move_servo(int pin, int angle)
 }
 
 
+void toggle_relay()
+{
+  relay_state = !relay_state;
+}
+
+
+void toggle_relay2()
+{
+  int val = digitalRead(2);
+
+  if (val == LOW) {
+    relay_state = LOW;
+  } else {
+    relay_state = HIGH;
+  }
+}
+
+void relay_on()
+{
+  relay_state = HIGH;
+}
+
+
+void relay_off()
+{
+  relay_state = LOW;
+}
+
+
 void loop() 
 {
   if (Serial.available() > 3) { // Wait for serial input (min 4 bytes in buffer)
@@ -166,4 +204,6 @@ void loop()
     }
   }
   blink_leds();
+  digitalWrite(relay_pin, relay_state);
 }
+
