@@ -88,4 +88,4 @@ class Servo(Command):
 
 class Pin(Command):
     def __init__(self, pin, port):
-        super(Servo, self).__init__(4, pin, port)
+        super(Pin, self).__init__(4, pin, port)

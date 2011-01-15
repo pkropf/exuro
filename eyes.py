@@ -3,7 +3,7 @@
 
 from commands import Servo
 from eye import Eye
-
+from time import sleep
 
 
 from random import Random
@@ -22,3 +22,4 @@ r = Random()
 for x in range(100000):
     leye.move(r.randrange(*hrange), r.randrange(*vrange))
     reye.move(r.randrange(*hrange), r.randrange(*vrange))
+    sleep(0.5)

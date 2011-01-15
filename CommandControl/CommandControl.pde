@@ -153,7 +153,11 @@ void loop()
             break;
           case CMD_PIN:
             pinMode(parm1, OUTPUT);
-            digitalWrite(parm1, parm2 == 0 ? LOW : HIGH);
+            if (parm2 == 0) {
+                digitalWrite(parm1, LOW);
+            } else {
+                digitalWrite(parm1, HIGH);
+            }
             break;
           case CMD_REGISTER_SWITCH:
           case CMD_READ_SWITCH:
@@ -163,4 +167,3 @@ void loop()
   }
   blink_leds();
 }
-
