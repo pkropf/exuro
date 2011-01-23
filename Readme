@@ -1,7 +1,7 @@
-Eyes
-----
+Exuro
+-----
 
-Arduino based servo control of 4 motors to move a pair of gimbal based eyes.
+Exuro is a small robot that uses an arduino to control 4 servo motors that move a pair of gimbal based eyes, it uses a Kinect to find interesting things to focus the eyes on and controls a small propane based fire poofer through a solid state relay connected to the arduino.
 
 
 Other Notes
