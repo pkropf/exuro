@@ -3,7 +3,6 @@
 from commands import Servo
 from time import sleep
 
-
 s1 = Servo(9, '/dev/tty.usbmodemfa141')
 s2 = Servo(10, '/dev/tty.usbmodemfa141')
 

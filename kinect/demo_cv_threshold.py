@@ -5,8 +5,8 @@ import frame_convert
 import numpy as np
 
 
-threshold = 100
-current_depth = 0
+threshold = 30
+current_depth = 750
 
 
 def change_threshold(value):
@@ -50,5 +50,5 @@ print('Press ESC in window to stop')
 while 1:
     show_depth()
     show_video()
-    if cv.WaitKey(10) == 27:
+    if cv.WaitKey(5) == 27:
         break

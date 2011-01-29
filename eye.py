@@ -3,12 +3,21 @@
 
 from commands import Servo
 from time import sleep
+import ConfigParser
 
+config = ConfigParser.RawConfigParser()
+config.read('exuro.cfg')
 
+_port  = config.get('arduino', 'port')
+_lhpin = config.getint('arduino', 'left_eye_horizontal')
+_lvpin = config.getint('arduino', 'left_eye_vertical')
+_rhpin = config.getint('arduino', 'right_eye_horizontal')
+_rvpin = config.getint('arduino', 'right_eye_vertical')
 
 
 class Eye(object):
-    def __init__(self, horizontal_pin, vertical_pin, port):
+    def __init__(self, name, horizontal_pin, vertical_pin, port):
+        self.name = name
         self.hpin = horizontal_pin
         self.vpin = vertical_pin
         self.port = port
@@ -20,23 +29,27 @@ class Eye(object):
         print self.vservo
 
 
+    def str(self):
+        return self.name
+
     def move(self, horizontal, vertical):
-        print 'move to', horizontal, vertical
+        print 'move', self.name, 'to', horizontal, vertical
         self.hservo.send(horizontal)
         self.vservo.send(vertical)
 
+
+LeftEye  = Eye('left eye',  _lhpin, _lvpin, _port)
+RightEye = Eye('right eye', _rhpin, _rvpin, _port)
 
 
 if __name__ == '__main__':
     from random import Random
 
-    vpin = 9
-    hpin = 10
     hrange = (10, 160)
     vrange = (40, 160)
-    port = '/dev/tty.usbmodemfd131'
-    eye = Eye(hpin, vpin, port)
     r = Random()
     
-    for x in range(1000):
-        eye.move(r.randrange(*hrange), r.randrange(*vrange))
+    for x in range(100000):
+        LeftEye.move(r.randrange(*hrange), r.randrange(*vrange))
+        RightEye.move(r.randrange(*hrange), r.randrange(*vrange))
+        sleep(0.25)
