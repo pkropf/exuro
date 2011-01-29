@@ -9,10 +9,10 @@ config = ConfigParser.RawConfigParser()
 config.read('exuro.cfg')
 
 _port  = config.get('arduino', 'port')
-_lhpin = config.getint('arduino', 'left_eye_horizontal')
-_lvpin = config.getint('arduino', 'left_eye_vertical')
-_rhpin = config.getint('arduino', 'right_eye_horizontal')
-_rvpin = config.getint('arduino', 'right_eye_vertical')
+_lhpin = config.getint('eye', 'left_horizontal')
+_lvpin = config.getint('eye', 'left_vertical')
+_rhpin = config.getint('eye', 'right_horizontal')
+_rvpin = config.getint('eye', 'right_vertical')
 
 
 class Eye(object):

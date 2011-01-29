@@ -9,10 +9,10 @@ config = ConfigParser.RawConfigParser()
 config.read('exuro.cfg')
 
 port  = config.get('arduino', 'port')
-s1pin = config.getint('arduino', 'left_eye_horizontal')
-s2pin = config.getint('arduino', 'left_eye_vertical')
-s3pin = config.getint('arduino', 'right_eye_horizontal')
-s4pin = config.getint('arduino', 'right_eye_vertical')
+s1pin = config.getint('eye', 'left_horizontal')
+s2pin = config.getint('eye', 'left_vertical')
+s3pin = config.getint('eye', 'right_horizontal')
+s4pin = config.getint('eye', 'right_vertical')
 a1  = 10
 a2  = 170
 

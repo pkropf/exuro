@@ -13,8 +13,13 @@
 
 import serial
 import time
+import ConfigParser
 
-_time_reset = 2.0      # how long does it take for the arduino to reset
+config = ConfigParser.RawConfigParser()
+config.read('exuro.cfg')
+
+_pause      = config.getfloat('servo',   'pause')
+_reset_time = config.getfloat('arduino', 'reset_time')
 
 
 class Command(object):
@@ -41,8 +46,8 @@ class Command(object):
 
         try:
             duration = time.time() - self.last_reset # it takes around 2 seconds for the arduino be become ready after
-            if duration < _time_reset:               # serial communications have been established. so make sure it's
-                time.sleep(_time_reset - duration)             # been at least 2 seconds before the last reset.
+            if duration < _reset_time:               # serial communications have been established. so make sure it's
+                time.sleep(_reset_time - duration)             # been at least 2 seconds before the last reset.
 
             self.serial.write(chr(255))          # header, start of a new command set
             self.serial.write(chr(self.command)) # with our command code
@@ -51,7 +56,7 @@ class Command(object):
             self.last_message = time.time()
 
         except serial.serialutil.SerialException:
-            time.sleep(_time_reset)
+            time.sleep(_reset_time)
             self.reset_serial()
 
     def check(self, parm):
@@ -66,7 +71,7 @@ class Blink(Command):
 
 
 class Servo(Command):
-    def __init__(self, pin, port, pause = 0.1):
+    def __init__(self, pin, port, pause = _pause):
         super(Servo, self).__init__(1, pin, port)
         self.check_msg    = 'Servo angle must be an integer between 0 and 180.'
         self.last_message = 0      # when the last message was sent

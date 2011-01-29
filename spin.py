@@ -2,16 +2,13 @@
 
 from commands import Servo
 from time import sleep
-
-s1 = Servo(9, '/dev/tty.usbmodemfa141')
-s2 = Servo(10, '/dev/tty.usbmodemfa141')
+from eye import LeftEye, RightEye
 
 for z in range(3):
-    for x in range(180):
-        s1.send(x)
-        s2.send(180-x)
-        sleep(0.02)
+    for x in range(0, 180, 10):
+        LeftEye.move(x, 180-x)
+        RightEye.move(180-x, x)
 
-    s1.send(0)
-    s2.send(180)
+    LeftEye.move(0, 180)
+    RightEye.move(180, 0)
     sleep(1)
