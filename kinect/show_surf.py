@@ -11,9 +11,9 @@ import time
 
 _hessian    = 3000
 hessian_max = 100000
-_octive     = 3
+_octive     = 4
 octive_max  = 25
-_layer      = 4
+_layer      = 0
 layer_max   = 25
 
 def change_hessian(value):
@@ -50,8 +50,9 @@ while 1:
     img_pil = Image.fromstring("RGB", cv.GetSize(video), video.tostring())
     pgimg = pygame.image.frombuffer(img_pil.tostring(), img_pil.size, img_pil.mode)
 
+    print len(keypoints)
     for ((x, y), laplacian, size, dir, hessian) in keypoints:
-        print "x=%d y=%d laplacian=%d size=%d dir=%f hessian=%f" % (x, y, laplacian, size, dir, hessian)
+        #print "x=%d y=%d laplacian=%d size=%d dir=%f hessian=%f" % (x, y, laplacian, size, dir, hessian)
         radio = size*1.2/9.*2
         #print "radioOld: ", int(radio)
         color = (255, 0, 0)
