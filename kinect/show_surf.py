@@ -9,11 +9,11 @@ import Image
 import time
 
 
-_hessian     = 3000
+_hessian    = 3000
 hessian_max = 100000
-_octive      = 3
+_octive     = 3
 octive_max  = 25
-_layer       = 4
+_layer      = 4
 layer_max   = 25
 
 def change_hessian(value):
