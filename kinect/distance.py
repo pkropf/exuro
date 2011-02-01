@@ -13,6 +13,7 @@ def closest(depth, areas):
     d = numpy.copy(depth)
 
     for x, y, radius in areas:
+        print x, y, radius
         point = depth[x, y]
         if x - radius < 0:
             x = radius
