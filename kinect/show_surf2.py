@@ -7,13 +7,15 @@ import pickle
 import time
 
 
-_hessian    = 3000
-hessian_max = 100000
-_octive     = 4
-octive_max  = 25
-_layer      = 0
-layer_max   = 25
-changed     = True
+_hessian     = 3000
+hessian_max  = 100000
+_octive      = 4
+octive_max   = 25
+_layer       = 0
+layer_max    = 25
+changed      = True
+_gaussian    = 3
+gaussian_max = 200
 
 def change_hessian(value):
     global _hessian, changed
@@ -30,25 +32,37 @@ def change_layer(value):
     _layer = value
     changed = True
 
+def change_gaussian(value):
+    global _gaussian, changed
+    _gaussian = value
+    changed = True
+
 
 #cv.NamedWindow('Depth')
-cv.NamedWindow('Color')
-cv.CreateTrackbar('hessian', 'Color', _hessian, hessian_max, change_hessian)
-cv.CreateTrackbar('octive',  'Color', _octive,  octive_max,  change_octive)
-cv.CreateTrackbar('layer',   'Color', _layer,   layer_max,   change_layer)
+cv.NamedWindow('Processed')
+cv.NamedWindow('Gray')
+cv.CreateTrackbar('hessian',  'Processed', _hessian,  hessian_max,  change_hessian)
+cv.CreateTrackbar('octive',   'Processed', _octive,   octive_max,   change_octive)
+cv.CreateTrackbar('layer',    'Processed', _layer,    layer_max,    change_layer)
+cv.CreateTrackbar('gaussian', 'Processed', _gaussian, gaussian_max, change_gaussian)
 
 #depth = pickle.load(open('depth.pickle', 'r'))
 video = cv.LoadImageM('depth.jpg')
 gray_base = cv.CreateImage(cv.GetSize(video), cv.IPL_DEPTH_8U, 1)
 gray_show = cv.CreateImage(cv.GetSize(video), cv.IPL_DEPTH_8U, 1)
 cv.CvtColor(video, gray_base, cv.CV_RGB2GRAY)
+cv.ShowImage('Gray', gray_base)
 
 while 1:
     if changed:
         changed = False
 
-        cv.Copy(gray_base, gray_show)
-        (keypoints, descriptors) = cv.ExtractSURF(gray_base, None, cv.CreateMemStorage(), (0, _hessian + 1, _octive + 1, _layer + 1))
+        if _gaussian % 2 == 1:
+            g = _gaussian
+        else:
+            g = _gaussian + 1
+        cv.Smooth(gray_base, gray_show, cv.CV_GAUSSIAN, g, 3)
+        (keypoints, descriptors) = cv.ExtractSURF(gray_show, None, cv.CreateMemStorage(), (0, _hessian + 1, _octive + 1, _layer + 1))
 
         print len(keypoints)
         for ((x, y), laplacian, size, dir, hessian) in keypoints:
@@ -62,7 +76,7 @@ while 1:
             #print "radioNew: ", int(radio)
             cv.Circle(gray_show, (x,y), radio, color)
 
-        cv.ShowImage('Color', gray_show)
+        cv.ShowImage('Processed', gray_show)
 
     key = cv.WaitKey(10)
     if key == 27:    # escape
