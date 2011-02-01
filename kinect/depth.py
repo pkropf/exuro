@@ -1,3 +1,6 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
 """depth is a tuple of approximate depth in 
 meters for a given value in the array returned 
 from freenect.sync_get_depth()[0].
