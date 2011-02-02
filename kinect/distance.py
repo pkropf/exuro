@@ -6,33 +6,40 @@ import numpy
 import pickle
 import taber
 
-def closest(depth, areas):
+def closest(depth, areas, check='mean'):
     close = 2049
     location = None
 
-    d = numpy.copy(depth)
+    depthm = numpy.ma.masked_values(depth, 2047)
 
     for x, y, radius in areas:
-        print x, y, radius
-        point = depth[x, y]
-        if x - radius < 0:
-            x = radius
+        if check == 'mean':
 
-        if y - radius < 0:
-            y = radius
+            if x - radius < 0:
+                x = radius
 
-        x1 = x - radius
-        x2 = x1 + (radius * 2)
-        y1 = y - radius
-        y2 = y1 + (radius * 2)
+            if y - radius < 0:
+                y = radius
 
-        mean = depth[x1:x2, y1:y2].mean()
-        print x, y, radius, point, mean
-        if mean < close:
-            close = mean
-            location = (x, y, radius)
+            x1 = x - radius
+            x2 = x1 + (radius * 2)
+            y1 = y - radius
+            y2 = y1 + (radius * 2)
 
-    return close, location
+            mean = depthm[x1:x2, y1:y2].mean()
+            #print x, y, radius, mean
+            if mean < close:
+                close = mean
+                location = (x, y, radius)
+
+        elif check == 'point':
+            print x, y, radius
+            print depthm.shape
+            if depthm[x, y] < close:
+                close = depthm[x, y]
+                location = (x, y, radius)
+
+    return close, location[0], location[1], location[2]
 
 
 if __name__ == '__main__':
