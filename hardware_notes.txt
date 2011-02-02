@@ -1,0 +1,16 @@
+Hardware Notes
+--------------
+
+Arduino
+
+feed from arduino to robot head has N connections:
+
+1) ground
+2) power
+3) left eye horizontal servo control
+4) left eye vertical servo control
+5) left eye led
+6) right eye horizontal servo control
+7) right eye vertical servo control
+8) right eye led
+9) belly led

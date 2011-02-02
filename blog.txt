@@ -1,0 +1,36 @@
+notes for a blog posting on this project
+
+using arduino interrupts
+
+    need to tie the interrupt pin to ground (or +5) via a 1k resistor. otherwise, the wire will act like an antenna and cause stray interrupts to trigger
+
+    using a toggle (x = ~x) isn't good since it's possible to loose (or have an additional) interrupt. use an interrupt handler on change and then read the interrupt pin value to make a decision.
+
+
+arduino and servos
+
+    1 servo powered by the arduino is ok, 2 will cause the arduino to reset once in a while, 3 or more will cause the arduino to reset frequently. happens because the multiple servos draw too much power, to the point where the arduino is not getting enough power to run and will rest.
+
+
+background
+
+    stainless steel donation bot
+
+    4 servos driving a pair of 2 axis gimbals to mimic eyes
+
+    solid state relay to control the poofer (solenoid and ignition spark)
+
+    apex 5400 bill acceptor 
+
+    asco 1/2" solenoid to release propane
+
+    kinect to detect people and movement
+
+    computer to process kinect, provide sound and send commands to arduino over usb
+
+
+issues
+
+    alignment and orientation of servos
+
+    ignition - pilot vs spark plug vs silicon nitride

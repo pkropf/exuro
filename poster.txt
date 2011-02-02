@@ -1,0 +1,67 @@
+Here's the description for a poster session for PyCon 2011 in Atlanta, GA.
+
+
+
+Title: Interactions with Python and Kinect
+
+Description: Python, Kinect and Arduino are excellent tools to interact with the physical world. Using them, a small, interactive robot is being created to showcase skills and techniques that can be learned at The Crucible, a non-profit industrial arts education center located in Oakland, CA.
+
+Type: Poster
+
+Abstract: In 2010, Microsoft introduced the Kinect for use with their Xbox 360. It provides a set of sensors that allow people to interact with a game without using a controller. Soon after it's release, Adafruit Industries created a bounty for open source drivers to allow anyone to use the Kinect for other purposes. Within a week, the first open source drivers were released.
+
+The robot is being created using Python, a computer, a Kinect, stainless steel, an Arduino microcontroller, servo motors, a bill acceptor, a solenoid valve, a spark plug and a neon transformer. Using the Kinect to locate the closest person, the eyes of the robot track the person as they remain in its field of vision. Using pre-recorded sentences, the robot attempts to interact with the person and encourages them to make a donation.
+
+This session will discuss the use of Python to extract working data from a Kinect, communicating with an Arduino controller and techniques for real world interactions.
+
+Audience level: Experienced
+
+Submitting speaker: Peter Kropf
+
+
+
+
+details
+=======
+
+hardware
+--------
+
+computer, arduino, kinect, servos, switches, solenoid, propane, neon transformer, spark plug, stainless steel
+
+arduino board, sketches, controlling servos, sensing input, communicating with python
+
+
+software
+--------
+
+arduino sketch
+
+python code
+
+open source tools
++++++++++++++++++
+
+github, python, libfreenect, opencv
+
+on linux, use virtualenv. get latest cython and build w/ virtualenv.
+
+
+props
+-----
+
+kinect, arduino, single eye on small base, 2 servos, solid state relay (only if it's contained in a safe electrical box)
+
+
+printed
+-------
+
+4' x 4' board of details
+
+post cards, zazzle or vista print
+
+  * project name
+  * website or github url
+  * picture of eyes
+  * picture of poof
+  * my contact info
