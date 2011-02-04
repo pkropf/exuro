@@ -58,8 +58,8 @@ class Eye(object):
         self.vservo.send(vertical)
 
 
-LeftEye  = Eye('left eye',  _lhpin, _lvpin, _port)
-RightEye = Eye('right eye', _rhpin, _rvpin, _port)
+Left  = Eye('left eye',  _lhpin, _lvpin, _port)
+Right = Eye('right eye', _rhpin, _rvpin, _port)
 
 
 if __name__ == '__main__':
@@ -70,6 +70,6 @@ if __name__ == '__main__':
     r = Random()
     
     for x in range(100000):
-        LeftEye.move(r.randrange(*hrange), r.randrange(*vrange))
-        RightEye.move(r.randrange(*hrange), r.randrange(*vrange))
+        Left.move(r.randrange(*hrange), r.randrange(*vrange))
+        Right.move(r.randrange(*hrange), r.randrange(*vrange))
         sleep(0.25)

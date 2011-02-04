@@ -22,13 +22,13 @@
 
 from commands import Servo
 from time import sleep
-from eye import LeftEye, RightEye
+import eye
 
 for z in range(3):
     for x in range(0, 180, 10):
-        LeftEye.move(x, 180-x)
-        RightEye.move(180-x, x)
+        eye.Left.move(x, 180-x)
+        eye.Right.move(180-x, x)
 
-    LeftEye.move(0, 180)
-    RightEye.move(180, 0)
+    eye.Left.move(0, 180)
+    eye.Right.move(180, 0)
     sleep(1)

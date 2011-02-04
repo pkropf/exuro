@@ -26,14 +26,14 @@ import cv
 import frame_convert
 import numpy as np
 import math
+import eye
 
 
 threshold     = 30                      # 
 current_depth = 750                     # 
 closest       = (1,1)                   # the closest location
-max_points    = 7                       # how big is the jitter buffer
-points        = [(0, 0)] * max_points   # buffer to reduce closest jitters
 distance      = 1.0                     # distance in meters from the kinect
+shape         = (480, 640)              # assumed shape of the depth array
 
 
 def change_threshold(value):
@@ -46,10 +46,15 @@ def change_depth(value):
     current_depth = value
 
 
+def move_eyes():
+    """
+    """
+    global closest, distance
+    print closest, distance
+
+
 def show_depth():
-    global threshold
-    global current_depth
-    global closest
+    global threshold, current_depth, closest, distance
 
     depth, timestamp = freenect.sync_get_depth()
     depthm = np.ma.masked_values(depth, 2047)
@@ -57,9 +62,8 @@ def show_depth():
     amin = depthm.argmin()
     closest = np.unravel_index(amin, depthm.shape)
 
-    #print 'closest:', closest, depthm.shape
     distance = 0.1236 * math.tan(depthm.flatten()[amin] / 2842.5 + 1.1863)
-    print 'depth:', closest, amin, depthm.flatten()[amin], distance
+    #print 'depth:', closest, amin, depthm.flatten()[amin], distance
     depth = 255 * np.logical_and(depth >= current_depth - threshold,
                                  depth <= current_depth + threshold)
     depth = depth.astype(np.uint8)
@@ -89,6 +93,7 @@ print('Press ESC in window to stop')
 while 1:
     show_depth()
     show_video()
+    move_eyes()
 
     if cv.WaitKey(5) == 27:
         break
