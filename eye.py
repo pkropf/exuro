@@ -53,6 +53,7 @@ class Eye(object):
         self.vservo = Servo(self.vpin, port)
         self.offset = offset
         self.height = height
+        self.move(90, 90)
 
         if _debug:
             print self.name, self.hpin, self.vpin, self.port, self.offset
