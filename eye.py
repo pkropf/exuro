@@ -37,9 +37,14 @@ _rhpin = config.getint('eye', 'right_horizontal')
 _rvpin = config.getint('eye', 'right_vertical')
 
 _offset = config.getfloat('eye', 'offset')
+_height = config.getfloat('eye', 'height')
+
+_kinect_x = config.getint('kinect', 'x')
+_kinect_y = config.getint('kinect', 'y')
+
 
 class Eye(object):
-    def __init__(self, name, horizontal_pin, vertical_pin, port, offset):
+    def __init__(self, name, horizontal_pin, vertical_pin, port, offset, height=_height):
         self.name = name
         self.hpin = horizontal_pin
         self.vpin = vertical_pin
@@ -47,6 +52,7 @@ class Eye(object):
         self.hservo = Servo(self.hpin, port)
         self.vservo = Servo(self.vpin, port)
         self.offset = offset
+        self.height = height
 
         if _debug:
             print self.name, self.hpin, self.vpin, self.port, self.offset
@@ -57,6 +63,7 @@ class Eye(object):
     def str(self):
         return self.name
 
+
     def move(self, horizontal, vertical):
         if _debug:
             print 'move', self.name, 'to', horizontal, vertical
@@ -64,18 +71,48 @@ class Eye(object):
         self.vservo.send(vertical)
 
 
+    def focus(self, distance, point):
+        """distance in meters.
+        point is x, y tuple for location in grid space.
+        """
+        print distance, point
+
+
 Left  = Eye('left eye',  _lhpin, _lvpin, _port, -_offset)
 Right = Eye('right eye', _rhpin, _rvpin, _port, _offset)
 
 
-if __name__ == '__main__':
+def random_eyes():
     from random import Random
 
     hrange = (10, 160)
     vrange = (40, 160)
     r = Random()
-    
+
     for x in range(100000):
         Left.move(r.randrange(*hrange), r.randrange(*vrange))
         Right.move(r.randrange(*hrange), r.randrange(*vrange))
+        sleep(1.25)
+
+
+
+def random_focus():
+    from random import Random
+
+    hrange = (0, _kinect_x -1)
+    vrange = (0, _kinect_y - 1)
+    drange = (0, 3000)
+    r = Random()
+
+    for dummy in range(100000):
+        h = r.randrange(*hrange)
+        v = r.randrange(*vrange)
+        d = r.randrange(*drange) / 1000.0
+        Left.focus(d, (h, v))
+        Right.focus(d, (h, v))
         sleep(0.25)
+
+
+if __name__ == '__main__':
+    #random_eyes()
+    random_focus()
