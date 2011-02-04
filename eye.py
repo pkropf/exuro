@@ -28,38 +28,44 @@ import ConfigParser
 config = ConfigParser.RawConfigParser()
 config.read('exuro.cfg')
 
+_debug = config.getboolean('general', 'debug')
 _port  = config.get('arduino', 'port')
+
 _lhpin = config.getint('eye', 'left_horizontal')
 _lvpin = config.getint('eye', 'left_vertical')
 _rhpin = config.getint('eye', 'right_horizontal')
 _rvpin = config.getint('eye', 'right_vertical')
 
+_offset = config.getfloat('eye', 'offset')
 
 class Eye(object):
-    def __init__(self, name, horizontal_pin, vertical_pin, port):
+    def __init__(self, name, horizontal_pin, vertical_pin, port, offset):
         self.name = name
         self.hpin = horizontal_pin
         self.vpin = vertical_pin
         self.port = port
         self.hservo = Servo(self.hpin, port)
         self.vservo = Servo(self.vpin, port)
+        self.offset = offset
 
-        print self.hpin, self.vpin, self.port
-        print self.hservo
-        print self.vservo
+        if _debug:
+            print self.name, self.hpin, self.vpin, self.port, self.offset
+            print self.hservo
+            print self.vservo
 
 
     def str(self):
         return self.name
 
     def move(self, horizontal, vertical):
-        print 'move', self.name, 'to', horizontal, vertical
+        if _debug:
+            print 'move', self.name, 'to', horizontal, vertical
         self.hservo.send(horizontal)
         self.vservo.send(vertical)
 
 
-Left  = Eye('left eye',  _lhpin, _lvpin, _port)
-Right = Eye('right eye', _rhpin, _rvpin, _port)
+Left  = Eye('left eye',  _lhpin, _lvpin, _port, -_offset)
+Right = Eye('right eye', _rhpin, _rvpin, _port, _offset)
 
 
 if __name__ == '__main__':
