@@ -27,9 +27,11 @@ import frame_convert
 import numpy as np
 
 
-threshold = 30
+threshold     = 30
 current_depth = 750
-closest = (1,1)
+closest       = (1,1)
+max_points    = 7
+points        = [(0, 0)] * max_points
 
 def change_threshold(value):
     global threshold
@@ -51,9 +53,12 @@ def show_depth():
     amin = depthm.argmin()
     y = amin / depthm.shape[1]
     x = amin - (y * depthm.shape[1])
-    closest = (x, y)
+    points.pop()
+    points.insert(0, (x, y))
+    closest = (sum(z[0] for z in points) / max_points, 
+               sum(z[1] for z in points) / max_points)
 
-    print closest
+    #print closest
     depth = 255 * np.logical_and(depth >= current_depth - threshold,
                                  depth <= current_depth + threshold)
     depth = depth.astype(np.uint8)
@@ -67,6 +72,7 @@ def show_depth():
 
 def show_video():
     video = frame_convert.video_cv(freenect.sync_get_video()[0])
+    cv.Circle(video, closest, 8, (0, 255, 0))
     cv.Circle(video, closest, 4, (0, 255, 0))
     cv.ShowImage('Video', video)
 
