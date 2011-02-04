@@ -24,6 +24,8 @@
 from commands import Servo
 from time import sleep
 import ConfigParser
+import math
+
 
 config = ConfigParser.RawConfigParser()
 config.read('exuro.cfg')
@@ -39,8 +41,10 @@ _rvpin = config.getint('eye', 'right_vertical')
 _offset = config.getfloat('eye', 'offset')
 _height = config.getfloat('eye', 'height')
 
-_kinect_x = config.getint('kinect', 'x')
-_kinect_y = config.getint('kinect', 'y')
+_kinect_x = float(config.getint('kinect', 'x'))
+_kinect_y = float(config.getint('kinect', 'y'))
+_kinect_hfield = config.getint('kinect', 'hfield')
+_kinect_vfield = config.getint('kinect', 'vfield')
 
 
 class Eye(object):
@@ -74,8 +78,13 @@ class Eye(object):
     def focus(self, distance, point):
         """distance in meters.
         point is x, y tuple for location in grid space.
+        
+        angle of focus for x axis is x % of _kinect_x % of _kinect_hfield
+        angle of focus for y axis is y % of _kinect_y % of _kinect_vfield
         """
-        print distance, point
+        x = point[0] / _kinect_x * _kinect_hfield
+        y = point[1] / _kinect_y * _kinect_vfield
+        print distance, point, x, y
 
 
 Left  = Eye('left eye',  _lhpin, _lvpin, _port, -_offset)
