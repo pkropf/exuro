@@ -25,6 +25,7 @@ import ConfigParser
 config = ConfigParser.RawConfigParser()
 config.read('exuro.cfg')
 
+
 class servo(object):
     pause      = config.getfloat('servo',   'pause')
 
@@ -46,8 +47,10 @@ class eye(object):
         vpin = config.getint('left eye', 'vertical')
         hmin = config.getint('left eye', 'hmin')
         hmax = config.getint('left eye', 'hmax')
+        horient = config.getint('left eye', 'horient')
         vmin = config.getint('left eye', 'vmin')
         vmax = config.getint('left eye', 'vmax')
+        vorient = config.getint('left eye', 'vorient')
 
         offset = config.getfloat('left eye', 'offset')
         height = config.getfloat('left eye', 'height')
@@ -57,8 +60,10 @@ class eye(object):
         vpin = config.getint('right eye', 'vertical')
         hmin = config.getint('right eye', 'hmin')
         hmax = config.getint('right eye', 'hmax')
+        horient = config.getint('right eye', 'horient')
         vmin = config.getint('right eye', 'vmin')
         vmax = config.getint('right eye', 'vmax')
+        vorient = config.getint('right eye', 'vorient')
 
         offset = config.getfloat('right eye', 'offset')
         height = config.getfloat('right eye', 'height')
