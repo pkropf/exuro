@@ -22,37 +22,9 @@
 
 
 from commands import Servo
+import cfg
 from time import sleep
-import ConfigParser
 import math
-
-
-config = ConfigParser.RawConfigParser()
-config.read('exuro.cfg')
-
-_debug = config.getboolean('general', 'debug')
-_port  = config.get('arduino', 'port')
-
-_lhpin = config.getint('eye', 'left_horizontal')
-_lvpin = config.getint('eye', 'left_vertical')
-_lhmin = config.getint('eye', 'left_hmin')
-_lhmax = config.getint('eye', 'left_hmax')
-_lvmin = config.getint('eye', 'left_vmin')
-_lvmax = config.getint('eye', 'left_vmax')
-_rhpin = config.getint('eye', 'right_horizontal')
-_rvpin = config.getint('eye', 'right_vertical')
-_rhmin = config.getint('eye', 'right_hmin')
-_rhmax = config.getint('eye', 'right_hmax')
-_rvmin = config.getint('eye', 'right_vmin')
-_rvmax = config.getint('eye', 'right_vmax')
-
-_offset = config.getfloat('eye', 'offset')
-_height = config.getfloat('eye', 'height')
-
-_kinect_x = float(config.getint('kinect', 'x'))
-_kinect_y = float(config.getint('kinect', 'y'))
-_kinect_hfield = config.getint('kinect', 'hfield')
-_kinect_vfield = config.getint('kinect', 'vfield')
 
 
 class Eye(object):
@@ -60,7 +32,7 @@ class Eye(object):
                  horizontal_pin, vertical_pin, 
                  hmin, hmax, vmin, vmax,
                  port, offset, 
-                 height=_height):
+                 height):
         self.name = name
         self.hpin = horizontal_pin
         self.vpin = vertical_pin
@@ -75,7 +47,7 @@ class Eye(object):
         self.height = height
         self.move(90, 90)
 
-        if _debug:
+        if cfg.general.debug:
             print self.name, self.hpin, self.vpin, self.port, self.offset
             print self.hservo
             print self.vservo
@@ -86,7 +58,7 @@ class Eye(object):
 
 
     def move(self, horizontal, vertical):
-        if _debug:
+        if cfg.general.debug:
             print 'move', self.name, 'to', horizontal, vertical
         self.hservo.send(horizontal)
         self.vservo.send(vertical)
@@ -96,37 +68,41 @@ class Eye(object):
         """distance in meters.
         point is x, y tuple for location in grid space.
         
-        angle of focus for x axis is x % of _kinect_x % of _kinect_hfield
-        angle of focus for y axis is y % of _kinect_y % of _kinect_vfield
+        angle of focus for x axis is x % of cfg.kinect.x % of cfg.kinect.hfield
+        angle of focus for y axis is y % of cfg.kinect.y % of cfg.kinect.vfield
         """
-        x = point[0] / _kinect_x * _kinect_hfield
-        y = point[1] / _kinect_y * _kinect_vfield
+        x = point[0] / cfg.kinect.x * cfg.kinect.hfield
+        y = point[1] / cfg.kinect.y * cfg.kinect.vfield
         print distance, point, x, y
         self.move(x, y)
 
 
 Left  = Eye('left eye',
-            _lhpin, _lvpin,
-            _lhmin, _lhmax, _lvmin, _lvmax,
-            _port, -_offset)
+            cfg.eye.left.hpin, cfg.eye.left.vpin,
+            cfg.eye.left.hmin, cfg.eye.left.hmax, 
+            cfg.eye.left.vmin, cfg.eye.left.vmax,
+            cfg.arduino.port, 
+            cfg.eye.left.offset, cfg.eye.left.height)
+
 Right = Eye('right eye', 
-            _rhpin, _rvpin, 
-            _rhmin, _rhmax, _rvmin, _rvmax,
-            _port, _offset)
+            cfg.eye.right.hpin, cfg.eye.right.vpin, 
+            cfg.eye.right.hmin, cfg.eye.right.hmax, 
+            cfg.eye.right.vmin, cfg.eye.right.vmax,
+            cfg.arduino.port,
+            cfg.eye.left.offset, cfg.eye.right.height)
 
 
 def random_eyes():
     from random import Random
 
-    lhrange = (_lhmin, _lhmax)
-    lvrange = (_lvmin, _lvmax)
-    rhrange = (_rhmin, _rhmax)
-    rvrange = (_rvmin, _rvmax)
     r = Random()
 
     for x in range(100000):
-        Left.move(r.randrange(*lhrange), r.randrange(*lvrange))
-        Right.move(r.randrange(*rhrange), r.randrange(*rvrange))
+        Left.move(r.randrange(cfg.eye.left.hmin, cfg.eye.left.hmax), 
+                  r.randrange(cfg.eye.left.vmin, cfg.eye.left.vmax))
+
+        Right.move(r.randrange(cfg.eye.right.hmin, cfg.eye.right.hmax),
+                   r.randrange(cfg.eye.right.vmin, cfg.eye.right.vmax))
         sleep(0.25)
 
 
@@ -134,8 +110,8 @@ def random_eyes():
 def random_focus():
     from random import Random
 
-    hrange = (0, _kinect_x -1)
-    vrange = (0, _kinect_y - 1)
+    hrange = (0, cfg.kinect.x - 1)
+    vrange = (0, cfg.kinect.y - 1)
     drange = (0, 3000)
     r = Random()
 

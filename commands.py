@@ -33,13 +33,15 @@
 
 import serial
 import time
-import ConfigParser
+import cfg
 
-config = ConfigParser.RawConfigParser()
-config.read('exuro.cfg')
 
-_pause      = config.getfloat('servo',   'pause')
-_reset_time = config.getfloat('arduino', 'reset_time')
+class cmd(object):
+    blink           = 0  # blink an led
+    servo           = 1  # move a servo
+    register_switch = 2  # register a switch on a pin
+    read_switch     = 3  # read the status of a switch, open / closed
+    pin             = 4  # set a pin to the specified voltage
 
 
 class Command(object):
@@ -55,19 +57,20 @@ class Command(object):
 
 
     def reset_serial(self):
-        self.serial = serial.Serial(self.port, 9600, timeout=1)
+        self.serial = serial.Serial(self.port, cfg.arduino.baud, timeout=1)
+        # todo: last_reset should be a singeton across the same self.port
         self.last_reset = time.time()
         #print self.serial, self.last_reset
 
 
     def send(self, parm):
         if not self.check(parm):
-            raise ValueError, self.check_msg
+            raise ValueError, (parm, self.check_msg)
 
         try:
             duration = time.time() - self.last_reset # it takes around 2 seconds for the arduino be become ready after
-            if duration < _reset_time:               # serial communications have been established. so make sure it's
-                time.sleep(_reset_time - duration)             # been at least 2 seconds before the last reset.
+            if duration < cfg.arduino.reset_time:            # serial communications have been established. so make sure it's
+                time.sleep(cfg.arduino.reset_time - duration)# been at least 2 seconds before the last reset.
 
             self.serial.write(chr(255))          # header, start of a new command set
             self.serial.write(chr(self.command)) # with our command code
@@ -76,7 +79,7 @@ class Command(object):
             self.last_message = time.time()
 
         except serial.serialutil.SerialException:
-            time.sleep(_reset_time)
+            time.sleep(cfg.arduino.reset_time)
             self.reset_serial()
 
     def check(self, parm):
@@ -86,13 +89,13 @@ class Command(object):
 
 class Blink(Command):
     def __init__(self, pin, port):
-        super(Blink, self).__init__(0, pin, port) 
+        super(Blink, self).__init__(cmd.blink, pin, port) 
 
 
 
 class Servo(Command):
-    def __init__(self, pin, min, max, port, pause = _pause):
-        super(Servo, self).__init__(1, pin, port)
+    def __init__(self, pin, min, max, port, pause = cfg.servo.pause):
+        super(Servo, self).__init__(cmd.servo, pin, port)
         self.min          = min
         self.max          = max
         self.check_msg    = 'Servo angle must be an integer between %d and %d.' % (self.min, self.max)
@@ -115,4 +118,4 @@ class Servo(Command):
 
 class Pin(Command):
     def __init__(self, pin, port):
-        super(Pin, self).__init__(4, pin, port)
+        super(Pin, self).__init__(cmd.pin, pin, port)

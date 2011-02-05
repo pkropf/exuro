@@ -27,20 +27,14 @@ import frame_convert
 import numpy as np
 import math
 import eye
-import ConfigParser
-
-config = ConfigParser.RawConfigParser()
-config.read('exuro.cfg')
-kinect_height = config.getfloat('kinect', 'height')
-kinect_x      = config.getint('kinect', 'x')
-kinect_y      = config.getint('kinect', 'y')
+import cfg
 
 
-threshold     = 30                      # 
-current_depth = 750                     # 
-closest       = (1,1)                   # the closest location
-distance      = 1.0                     # distance in meters from the kinect
-shape         = (kinect_y, kinect_x)    # assumed shape of the depth array
+threshold     = 30                           # 
+current_depth = 750                          # 
+closest       = (1,1)                        # the closest location
+distance      = 1.0                          # distance in meters from the kinect
+shape         = (cfg.kinect.y, cfg.kinect.x) # assumed shape of the depth array
 
 
 def change_threshold(value):
