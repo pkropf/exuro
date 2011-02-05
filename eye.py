@@ -32,7 +32,8 @@ class Eye(object):
                  horizontal_pin, vertical_pin, 
                  hmin, hmax, vmin, vmax,
                  port, offset, 
-                 height):
+                 height,
+                 horient, vorient):
         self.name = name
         self.hpin = horizontal_pin
         self.vpin = vertical_pin
@@ -45,6 +46,8 @@ class Eye(object):
         self.vservo = Servo(self.vpin, self.vmin, self.vmax, port)
         self.offset = offset
         self.height = height
+        self.horient = horient
+        self.vorient = vorient
         self.move(90, 90)
 
         if cfg.general.debug:
@@ -68,12 +71,38 @@ class Eye(object):
         """distance in meters.
         point is x, y tuple for location in grid space.
         
-        angle of focus for x axis is x % of cfg.kinect.x % of cfg.kinect.hfield
-        angle of focus for y axis is y % of cfg.kinect.y % of cfg.kinect.vfield
+        angle of focus is currently very simplistic. it doesn't yet
+        take into account that the eyes are offset from the center and
+        it doesn't yet take into account the distance of the point in
+        question.
+
+        calculating the angle of focus depends on how the servo is
+        oriented and moves. if a low value moves the servo to the left
+        or up, then the calculation is:
+
+            range of movement * percentage of x as related to the
+            scale of the axis
+
+        if a high value moves the servo to the left or up, then the
+        calculation is:
+
+            axis max - range of movement * percentage of x as related
+            to scale of the axis
         """
-        x = point[0] / cfg.kinect.x * cfg.kinect.hfield
-        y = point[1] / cfg.kinect.y * cfg.kinect.vfield
-        print distance, point, x, y
+
+        if self.horient == 1:                # movement scale goes from high to low
+            x = self.hmax - ((self.hmax - self.hmin) * point[0] / cfg.kinect.x)
+        else:                                # movement scale goes from low to high
+            x = (self.hmax - self.hmin) * point[0] / cfg.kinect.x
+
+        if self.vorient == 1:                # movement scale goes from high to low
+            y = self.vmax - ((self.vmax - self.vmin) * point[1] / cfg.kinect.y)
+        else:                                # movement scale goes from low to high
+            y = (self.vmax - self.vmin) * point[1] / cfg.kinect.y
+
+        if cfg.general.debug:
+            print distance, point, x, y
+
         self.move(x, y)
 
 
@@ -82,14 +111,16 @@ Left  = Eye('left eye',
             cfg.eye.left.hmin, cfg.eye.left.hmax, 
             cfg.eye.left.vmin, cfg.eye.left.vmax,
             cfg.arduino.port, 
-            cfg.eye.left.offset, cfg.eye.left.height)
+            cfg.eye.left.offset, cfg.eye.left.height,
+            cfg.eye.left.horient, cfg.eye.left.vorient)
 
 Right = Eye('right eye', 
             cfg.eye.right.hpin, cfg.eye.right.vpin, 
             cfg.eye.right.hmin, cfg.eye.right.hmax, 
             cfg.eye.right.vmin, cfg.eye.right.vmax,
             cfg.arduino.port,
-            cfg.eye.left.offset, cfg.eye.right.height)
+            cfg.eye.right.offset, cfg.eye.right.height,
+            cfg.eye.right.horient, cfg.eye.right.vorient)
 
 
 def random_eyes():
