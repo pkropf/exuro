@@ -91,9 +91,11 @@ class Blink(Command):
 
 
 class Servo(Command):
-    def __init__(self, pin, port, pause = _pause):
+    def __init__(self, pin, min, max, port, pause = _pause):
         super(Servo, self).__init__(1, pin, port)
-        self.check_msg    = 'Servo angle must be an integer between 0 and 180.'
+        self.min          = min
+        self.max          = max
+        self.check_msg    = 'Servo angle must be an integer between %d and %d.' % (self.min, self.max)
         self.last_message = 0      # when the last message was sent
         self.pause        = pause  # how long to wait before sending the next servo
 
@@ -107,7 +109,7 @@ class Servo(Command):
 
 
     def check(self, parm):
-        return 0 <= parm <= 180
+        return self.min <= parm <= self.max
 
 
 
