@@ -1,0 +1,5 @@
+look at smoothing out the image before calling extractsurf on it.
+
+look at the tutorial on pythonvision.org to see examples of other ways to find objects.
+
+once you have a set of areas to test, write some code to find those areas on the depth map, compute the average depth over the area and return the area with the smallest average. use that to direct the eyes at a point in space.
