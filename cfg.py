@@ -27,7 +27,8 @@ config.read('exuro.cfg')
 
 
 class servo(object):
-    pause      = config.getfloat('servo',   'pause')
+    pause       = config.getfloat('servo',   'pause')
+    limit_watch = config.getboolean('servo', 'limit_watch')
 
 
 class arduino(object):

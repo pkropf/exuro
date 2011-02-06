@@ -51,8 +51,8 @@ def move_eyes():
     """
     """
     global closest, distance
-    eye.Left.focus(distance, closest)
-    eye.Right.focus(distance, closest)
+    eye.Left.focus(distance, (closest[1], closest[0]))
+    eye.Right.focus(distance, (closest[1], closest[0]))
 
 
 def show_depth():

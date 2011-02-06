@@ -64,8 +64,12 @@ class Command(object):
 
 
     def send(self, parm):
-        if not self.check(parm):
-            raise ValueError, (parm, self.check_msg)
+        if cfg.servo.limit_watch:
+            parm = self.limit(parm)
+
+        else:
+            if not self.check(parm):
+                raise ValueError, (parm, self.check_msg)
 
         try:
             duration = time.time() - self.last_reset # it takes around 2 seconds for the arduino be become ready after
@@ -84,6 +88,9 @@ class Command(object):
 
     def check(self, parm):
         return True
+
+    def limit(self, parm):
+        return parm
 
 
 
@@ -113,6 +120,17 @@ class Servo(Command):
 
     def check(self, parm):
         return self.min <= parm <= self.max
+
+
+    def limit(self, parm):
+        if parm < self.min:
+            return self.min
+
+        if parm > self.max:
+            return self.max
+
+        return parm
+
 
 
 
