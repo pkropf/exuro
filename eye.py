@@ -95,13 +95,14 @@ class Eye(object):
         else:                                # movement scale goes from low to high
             x = (self.hmax - self.hmin) * point[0] / cfg.kinect.x
 
+
         if self.vorient == 1:                # movement scale goes from high to low
             y = self.vmax - ((self.vmax - self.vmin) * point[1] / cfg.kinect.y)
         else:                                # movement scale goes from low to high
             y = (self.vmax - self.vmin) * point[1] / cfg.kinect.y
 
         if cfg.general.debug:
-            print distance, point, x, y
+            print distance, point, x, y, self.horient
 
         self.move(x, y)
 

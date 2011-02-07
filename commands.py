@@ -108,9 +108,15 @@ class Servo(Command):
         self.check_msg    = 'Servo angle must be an integer between %d and %d.' % (self.min, self.max)
         self.last_message = 0      # when the last message was sent
         self.pause        = pause  # how long to wait before sending the next servo
+        self.max_points   = 3
+        self.points       = [0] * self.max_points
 
 
     def send(self, parm):
+        self.points.pop()
+        self.points.insert(0, parm)
+        parm = sum(self.points) / self.max_points
+
         duration = time.time() - self.last_message
         if duration < self.pause:
             time.sleep(self.pause - duration)
