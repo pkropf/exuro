@@ -49,8 +49,8 @@ class Eye(object):
         self.horient = horient
         self.vorient = vorient
         self.move(90, 90)
-        #self.focus = self.focus_simple
-        self.focus = self.focus_angles
+        self.focus = self.focus_simple
+        #self.focus = self.focus_angles
 
         if cfg.general.debug:
             print self.name, self.hpin, self.vpin, self.port, self.offset
