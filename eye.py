@@ -49,6 +49,8 @@ class Eye(object):
         self.horient = horient
         self.vorient = vorient
         self.move(90, 90)
+        #self.focus = self.focus_simple
+        self.focus = self.focus_angles
 
         if cfg.general.debug:
             print self.name, self.hpin, self.vpin, self.port, self.offset
@@ -67,10 +69,10 @@ class Eye(object):
         self.vservo.send(vertical)
 
 
-    def focus(self, distance, point):
+    def focus_simple(self, distance, point):
         """distance in meters.
         point is x, y tuple for location in grid space.
-        
+
         angle of focus is currently very simplistic. it doesn't yet
         take into account that the eyes are offset from the center and
         it doesn't yet take into account the distance of the point in
@@ -103,6 +105,68 @@ class Eye(object):
 
         if cfg.general.debug:
             print distance, point, x, y, self.horient
+
+        self.move(x, y)
+
+
+    def focus_angles(self, distance, point):
+        """distance in meters.
+        point is x, y tuple for location in grid space.
+
+        to calculate the focus for an eye on the x axis:
+
+            1) calculate the distance of the known point (px, py) to the center (cx, cy):
+
+                 radius = sqrt(((px - cx) ** 2) + ((py - cy) ** 2))
+
+                 where:
+
+                     cx, cy = 640 / 2, 480 / 2
+
+            2) calculate the distance in pixels from the kinect to the center of the 
+               640x480 field:
+
+                 x_to_center = 320 / tan(kinect_field_x / 2)
+
+                 where:
+                     320 is 1/2 of the horizontal field (sets up for a right triangle)
+                     kinect_field_x is the kinect's field of vision along the x axis.
+
+            3) x_angle = atan(radius / x_to_center)
+
+        for the y axis:
+
+            1) same as for x axis
+
+            2) y_to_center = 240 / tan(kinect_field_y / 2)
+
+                where 240 is 1/2 of the vertical field and kinect_field_y is the kinect's
+                field of vision along the y axis.
+
+            3) y_angle = atan(radius / y_to_center)
+        """
+
+        radius = math.sqrt(((point[0] - 320) ** 2) + ((point[1] - 240) ** 2))
+
+        x_to_center = 320 / math.tan(math.radians(cfg.kinect.x / 2))
+        x_angle = math.degrees(math.atan(radius / x_to_center))
+
+        y_to_center = 240 / math.tan(math.radians(cfg.kinect.y / 2))
+        y_angle = math.degrees(math.atan(radius / y_to_center))
+
+        if self.horient == 1:                # movement scale goes from high to low
+            x = 90 - x_angle
+        else:                                # movement scale goes from low to high
+            x = 90 + x_angle
+
+
+        if self.vorient == 1:                # movement scale goes from high to low
+            y = 90 - y_angle
+        else:                                # movement scale goes from low to high
+            y = 90 + y_angle
+
+        if cfg.general.debug:
+            print distance, point, x, y, radius, x_angle, y_angle, self.horient
 
         self.move(x, y)
 

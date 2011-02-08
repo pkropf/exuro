@@ -34,3 +34,13 @@ issues
     alignment and orientation of servos
 
     ignition - pilot vs spark plug vs silicon nitride
+
+
+postings
+    describe the math to translate the position and depth found with the sensor to moving the eyes to focus on it
+    
+    video showing the eyes moving
+    
+    video showing the eyes tracking the closest item
+    
+    video showing the poofer going off
