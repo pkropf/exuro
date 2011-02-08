@@ -48,7 +48,7 @@ class Eye(object):
         self.height = height
         self.horient = horient
         self.vorient = vorient
-        self.move(90, 90)
+        self.move(*self.center())
         self.focus = self.focus_simple
         #self.focus = self.focus_angles
 
@@ -60,6 +60,10 @@ class Eye(object):
 
     def str(self):
         return self.name
+
+
+    def center(self):
+        return (self.hmax - self.hmin) / 2, (self.vmax - self.vmin) / 2
 
 
     def move(self, horizontal, vertical):
