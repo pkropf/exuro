@@ -14,3 +14,24 @@ feed from arduino to robot head has N connections:
 7) right eye vertical servo control
 8) right eye led
 9) belly led
+
+
+Control Cable
+=============
+
+14 pin plug amp receptacle 206043-1R / jameco 495146, plug 206044-1R / jameco 495031
+
+pin 1   pink            left eye power
+pin 2   light green     left eye ground
+pin 3   white           left eye horizontal control  arduino 9
+pin 4   brown           left eye vertical control    arduino 10 
+pin 5   blue            left eye led
+pin 6   red / black     right eye power
+pin 7   red             right eye ground
+pin 8   dark blue       right eye horizontal control
+pin 9   orange          right eye vertical control
+pin 10  brown / black   right eye led
+pin 11  purple          body led power
+pin 12  yellow          body led ground
+pin 13  orange / black  not used
+pin 14  green           not used
