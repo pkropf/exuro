@@ -23,13 +23,13 @@ Control Cable
 
 pin 1   pink            left eye power
 pin 2   light green     left eye ground
-pin 3   white           left eye horizontal control  arduino 9
-pin 4   brown           left eye vertical control    arduino 10 
+pin 3   white           left eye horizontal control     arduino 9
+pin 4   brown           left eye vertical control       arduino 10 
 pin 5   blue            left eye led
 pin 6   red / black     right eye power
 pin 7   red             right eye ground
-pin 8   dark blue       right eye horizontal control
-pin 9   orange          right eye vertical control
+pin 8   dark blue       right eye horizontal control    arduino 12
+pin 9   orange          right eye vertical control      arduino 11
 pin 10  brown / black   right eye led
 pin 11  purple          body led power
 pin 12  yellow          body led ground
