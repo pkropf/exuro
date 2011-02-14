@@ -30,8 +30,8 @@ import eye
 import cfg
 
 
-threshold     = 30                           # 
-current_depth = 750                          # 
+threshold     = 229                           # 
+current_depth = 727                          # 
 closest       = (1,1)                        # the closest location
 distance      = 1.0                          # distance in meters from the kinect
 shape         = (cfg.kinect.y, cfg.kinect.x) # assumed shape of the depth array
