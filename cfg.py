@@ -22,57 +22,67 @@
 import ConfigParser
 
 
-config = ConfigParser.RawConfigParser()
-config.read('exuro.cfg')
+exuro = ConfigParser.RawConfigParser()
+exuro.read('exuro.cfg')
+
+exuro_local = ConfigParser.RawConfigParser()
+exuro_local.read('exuro_local.cfg')
 
 
 class servo(object):
-    pause       = config.getfloat('servo',   'pause')
-    limit_watch = config.getboolean('servo', 'limit_watch')
+    pause       = exuro.getfloat('servo',   'pause')
+    limit_watch = exuro.getboolean('servo', 'limit_watch')
 
 
 class arduino(object):
-    reset_time = config.getfloat('arduino', 'reset_time')
-    baud       = config.getint('arduino',   'baud')
-    port       = config.get('arduino', 'port')
+    reset_time = exuro.getfloat('arduino', 'reset_time')
+    baud       = exuro.getint('arduino',   'baud')
+    port       = exuro.get('arduino', 'port')
 
 
 class general(object):
-    debug = config.getboolean('general', 'debug')
+    debug = exuro.getboolean('general', 'debug')
 
 
 class eye(object):
 
     class left(object):
-        hpin = config.getint('left eye', 'horizontal')
-        vpin = config.getint('left eye', 'vertical')
-        hmin = config.getint('left eye', 'hmin')
-        hmax = config.getint('left eye', 'hmax')
-        horient = config.getint('left eye', 'horient')
-        vmin = config.getint('left eye', 'vmin')
-        vmax = config.getint('left eye', 'vmax')
-        vorient = config.getint('left eye', 'vorient')
+        hpin = exuro.getint('left eye', 'horizontal')
+        vpin = exuro.getint('left eye', 'vertical')
+        hmin = exuro.getint('left eye', 'hmin')
+        hmax = exuro.getint('left eye', 'hmax')
+        horient = exuro.getint('left eye', 'horient')
+        vmin = exuro.getint('left eye', 'vmin')
+        vmax = exuro.getint('left eye', 'vmax')
+        vorient = exuro.getint('left eye', 'vorient')
 
-        offset = config.getfloat('left eye', 'offset')
-        height = config.getfloat('left eye', 'height')
+        offset = exuro.getfloat('left eye', 'offset')
+        height = exuro.getfloat('left eye', 'height')
 
     class right(object):
-        hpin = config.getint('right eye', 'horizontal')
-        vpin = config.getint('right eye', 'vertical')
-        hmin = config.getint('right eye', 'hmin')
-        hmax = config.getint('right eye', 'hmax')
-        horient = config.getint('right eye', 'horient')
-        vmin = config.getint('right eye', 'vmin')
-        vmax = config.getint('right eye', 'vmax')
-        vorient = config.getint('right eye', 'vorient')
+        hpin = exuro.getint('right eye', 'horizontal')
+        vpin = exuro.getint('right eye', 'vertical')
+        hmin = exuro.getint('right eye', 'hmin')
+        hmax = exuro.getint('right eye', 'hmax')
+        horient = exuro.getint('right eye', 'horient')
+        vmin = exuro.getint('right eye', 'vmin')
+        vmax = exuro.getint('right eye', 'vmax')
+        vorient = exuro.getint('right eye', 'vorient')
 
-        offset = config.getfloat('right eye', 'offset')
-        height = config.getfloat('right eye', 'height')
+        offset = exuro.getfloat('right eye', 'offset')
+        height = exuro.getfloat('right eye', 'height')
 
 
 class kinect(object):
-    height  = config.getfloat('kinect', 'height')
-    x       = config.getint('kinect', 'x')
-    y       = config.getint('kinect', 'y')
-    hfield  = config.getint('kinect', 'hfield')
-    vfield  = config.getint('kinect', 'vfield')
+    height  = exuro.getfloat('kinect', 'height')
+    x       = exuro.getint('kinect', 'x')
+    y       = exuro.getint('kinect', 'y')
+    hfield  = exuro.getint('kinect', 'hfield')
+    vfield  = exuro.getint('kinect', 'vfield')
+
+
+class keys(object):
+    consumer_key    = exuro_local.get('keys', 'consumer_key')
+    consumer_secret = exuro_local.get('keys', 'consumer_secret')
+    access_key      = exuro_local.get('keys', 'access_key')
+    access_secret   = exuro_local.get('keys', 'access_secret')

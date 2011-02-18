@@ -1,2 +1,3 @@
-ienv
 *.pyc
+exuro_local.cfg
+*~
