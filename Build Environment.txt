@@ -5,3 +5,4 @@ apt-get install python-virtualenv python-dev cmake g++ libusb-1.0-0 libusb-1.0-0
 easy_install python-twitter
 easy_install oauth2
 easy_install Tweepy
+easy_install gdata

@@ -24,9 +24,7 @@ import ConfigParser
 
 exuro = ConfigParser.RawConfigParser()
 exuro.read('exuro.cfg')
-
-exuro_local = ConfigParser.RawConfigParser()
-exuro_local.read('exuro_local.cfg')
+exuro.read('exuro_local.cfg') # override any values in the general configuration file
 
 
 class servo(object):
@@ -47,6 +45,7 @@ class general(object):
 class eye(object):
 
     class left(object):
+        active = exuro.getboolean('left eye', 'active')
         hpin = exuro.getint('left eye', 'horizontal')
         vpin = exuro.getint('left eye', 'vertical')
         hmin = exuro.getint('left eye', 'hmin')
@@ -60,6 +59,7 @@ class eye(object):
         height = exuro.getfloat('left eye', 'height')
 
     class right(object):
+        active = exuro.getboolean('right eye', 'active')
         hpin = exuro.getint('right eye', 'horizontal')
         vpin = exuro.getint('right eye', 'vertical')
         hmin = exuro.getint('right eye', 'hmin')
@@ -82,7 +82,7 @@ class kinect(object):
 
 
 class keys(object):
-    consumer_key    = exuro_local.get('keys', 'consumer_key')
-    consumer_secret = exuro_local.get('keys', 'consumer_secret')
-    access_key      = exuro_local.get('keys', 'access_key')
-    access_secret   = exuro_local.get('keys', 'access_secret')
+    consumer_key    = exuro.get('keys', 'consumer_key')
+    consumer_secret = exuro.get('keys', 'consumer_secret')
+    access_key      = exuro.get('keys', 'access_key')
+    access_secret   = exuro.get('keys', 'access_secret')

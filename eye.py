@@ -28,13 +28,14 @@ import math
 
 
 class Eye(object):
-    def __init__(self, name, 
+    def __init__(self, name, active,
                  horizontal_pin, vertical_pin, 
                  hmin, hmax, vmin, vmax,
                  port, offset, 
                  height,
                  horient, vorient):
         self.name = name
+        self.active = active
         self.hpin = horizontal_pin
         self.vpin = vertical_pin
         self.hmin = hmin
@@ -42,8 +43,14 @@ class Eye(object):
         self.vmin = vmin
         self.vmax = vmax
         self.port = port
-        self.hservo = Servo(self.hpin, self.hmin, self.hmax, port)
-        self.vservo = Servo(self.vpin, self.vmin, self.vmax, port)
+
+        if self.active:
+            self.hservo = Servo(self.hpin, self.hmin, self.hmax, port)
+            self.vservo = Servo(self.vpin, self.vmin, self.vmax, port)
+        else:
+            self.hservo = None
+            self.vservo = None
+
         self.offset = offset
         self.height = height
         self.horient = horient
@@ -69,8 +76,10 @@ class Eye(object):
     def move(self, horizontal, vertical):
         if cfg.general.debug:
             print 'move', self.name, 'to', horizontal, vertical
-        self.hservo.send(horizontal)
-        self.vservo.send(vertical)
+
+        if self.active:
+            self.hservo.send(horizontal)
+            self.vservo.send(vertical)
 
 
     def focus_simple(self, distance, point):
@@ -175,7 +184,7 @@ class Eye(object):
         self.move(x, y)
 
 
-Left  = Eye('left eye',
+Left  = Eye('left eye', cfg.eye.left.active,
             cfg.eye.left.hpin, cfg.eye.left.vpin,
             cfg.eye.left.hmin, cfg.eye.left.hmax, 
             cfg.eye.left.vmin, cfg.eye.left.vmax,
@@ -183,7 +192,7 @@ Left  = Eye('left eye',
             cfg.eye.left.offset, cfg.eye.left.height,
             cfg.eye.left.horient, cfg.eye.left.vorient)
 
-Right = Eye('right eye', 
+Right = Eye('right eye', cfg.eye.right.active,
             cfg.eye.right.hpin, cfg.eye.right.vpin, 
             cfg.eye.right.hmin, cfg.eye.right.hmax, 
             cfg.eye.right.vmin, cfg.eye.right.vmax,

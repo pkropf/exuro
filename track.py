@@ -55,10 +55,21 @@ def move_eyes():
     eye.Right.focus(distance, (closest[1], closest[0]))
 
 
+def save_depth(timestamp, depth):
+    #print 'depth timestamp:', timestamp, timestamp - last_time
+    np.save('images/%d_depth' % timestamp, depth)
+
+
+def save_video(timestamp, video):
+    #print 'video timestamp:', timestamp
+    np.save('images/%d_video' % timestamp, video)
+
+
 def show_depth():
     global threshold, current_depth, closest, distance
 
     depth, timestamp = freenect.sync_get_depth()
+    #save_depth(timestamp, depth)
     depthm = np.ma.masked_values(depth, 2047)
     depthm = depth
     amin = depthm.argmin()
@@ -78,7 +89,9 @@ def show_depth():
 
 
 def show_video():
-    video = frame_convert.video_cv(freenect.sync_get_video()[0])
+    video, timestamp = freenect.sync_get_video()
+    #save_video(timestamp, video)
+    video = frame_convert.video_cv(video)
     cv.Circle(video, (closest[1], closest[0]), 8, (0, 0, 255))
     cv.Circle(video, (closest[1], closest[0]), 4, (0, 0, 255))
     cv.ShowImage('Video', video)
