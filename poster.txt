@@ -27,9 +27,17 @@ details
 hardware
 --------
 
-computer, arduino, kinect, servos, switches, solenoid, propane, neon transformer, spark plug, stainless steel
+`computer, arduino, kinect, servos, switches, bill acceptor, solenoid, propane, neon transformer, spark plug, recycled stainless steel.
 
-arduino board, sketches, controlling servos, sensing input, communicating with python
+computer - connected to kinect and arduino; running ubuntu 10.10 64bit, python; polls arduino for depth and rgb feeds, parses depth for closest point, calculates angles for servos, sends message to arduino to move servos; pulls bill acceptor and trip switch data; saves depth, video, donation amount, kinect time, system time.
+
+arduino board - sketches, controlling servos, sensing input, communicating via usb / serial w/ computer.
+
+servos - 2 servos / eye.
+
+stainless - recycled materials from bayer pharmaceuticals in emeryville, ca.
+
+poofer - stainless tank, 120 volt solenoid, propane fuel source w/ regulator, spark plug for ignition, solid state relay controlled by arduino to activate solenoid and igintion.
 
 
 software
@@ -38,6 +46,12 @@ software
 arduino sketch
 
 python code
+
+    * opencv
+    * pyserial
+    * numpy
+    * openkinect
+
 
 open source tools
 +++++++++++++++++
@@ -65,3 +79,12 @@ post cards, zazzle or vista print
   * picture of eyes
   * picture of poof
   * my contact info
+  * exuro's facebook page, twitter account
+
+8 - 10 11" x 17" pages can be easily displayed on a 4' x 4' board
+
+2 pages to show hardware and data flow, 1 for the computer and 1 for the arduino
+page to show eye angle problem
+page to list out hardware w/ pictures
+page (horizontal) for project title, include image of eyes
+page showing poofer going off
