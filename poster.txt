@@ -27,7 +27,7 @@ details
 hardware
 --------
 
-`computer, arduino, kinect, servos, switches, bill acceptor, solenoid, propane, neon transformer, spark plug, recycled stainless steel.
+computer, arduino, kinect, servos, solid state relay, switches, bill acceptor, solenoid, propane, neon transformer, spark plug, recycled stainless steel.
 
 computer - connected to kinect and arduino; running ubuntu 10.10 64bit, python; polls arduino for depth and rgb feeds, parses depth for closest point, calculates angles for servos, sends message to arduino to move servos; pulls bill acceptor and trip switch data; saves depth, video, donation amount, kinect time, system time.
 
