@@ -18,7 +18,7 @@
 	<key>GuidesVisible</key>
 	<string>YES</string>
 	<key>ImageCounter</key>
-	<integer>24</integer>
+	<integer>26</integer>
 	<key>ImageLinkBack</key>
 	<array>
 		<dict/>
@@ -76,7 +76,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2011-03-07 21:06:40 -0800</string>
+	<string>2011-03-08 16:35:28 -0800</string>
 	<key>Modifier</key>
 	<string>peter</string>
 	<key>NotesVisible</key>
@@ -105,7 +105,7 @@
 		<key>NSPaperName</key>
 		<array>
 			<string>string</string>
-			<string>ledger</string>
+			<string>ADDC7792-B071-421A-BB63-7425C9D6AB39</string>
 		</array>
 		<key>NSPaperSize</key>
 		<array>
@@ -316,7 +316,7 @@ github.com/pkropf/exuro}</string>
 			<key>BackgroundGraphic</key>
 			<dict>
 				<key>Bounds</key>
-				<string>{{0, 0}, {1188, 733}}</string>
+				<string>{{0, 0}, {1466, 1188}}</string>
 				<key>Class</key>
 				<string>SolidGraphic</string>
 				<key>ID</key>
@@ -442,7 +442,7 @@ github.com/pkropf/exuro}</string>
 			<key>GridInfo</key>
 			<dict/>
 			<key>HPages</key>
-			<integer>1</integer>
+			<integer>2</integer>
 			<key>KeepToScale</key>
 			<false/>
 			<key>Layers</key>
@@ -474,7 +474,7 @@ github.com/pkropf/exuro}</string>
 				<real>0.0</real>
 			</dict>
 			<key>Orientation</key>
-			<integer>2</integer>
+			<integer>0</integer>
 			<key>PrintOnePage</key>
 			<false/>
 			<key>RowAlign</key>
@@ -2260,7 +2260,7 @@ Software}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{438.747, 482.75}, {85.506, 15}}</string>
+					<string>{{439, 483}, {85.0059, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>Head</key>
@@ -2271,7 +2271,7 @@ Software}</string>
 					<key>ID</key>
 					<integer>38</integer>
 					<key>Rotation</key>
-					<real>269.32977294921875</real>
+					<real>269.32986450195312</real>
 					<key>Shape</key>
 					<string>AdjustableArrow</string>
 					<key>ShapeData</key>
@@ -2356,7 +2356,7 @@ Software}</string>
 					<key>ID</key>
 					<integer>37</integer>
 					<key>Rotation</key>
-					<real>89.279197692871094</real>
+					<real>89.279159545898438</real>
 					<key>Shape</key>
 					<string>AdjustableArrow</string>
 					<key>ShapeData</key>
@@ -3857,7 +3857,7 @@ Software}</string>
 			<array>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1002, 358.75}, {36.0037, 15}}</string>
+					<string>{{1002, 358.75}, {36.0035, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>Head</key>
@@ -3870,7 +3870,7 @@ Software}</string>
 					<key>ID</key>
 					<integer>58</integer>
 					<key>Rotation</key>
-					<real>0.79576671123504639</real>
+					<real>0.795723557472229</real>
 					<key>Shape</key>
 					<string>AdjustableArrow</string>
 					<key>ShapeData</key>
@@ -3956,7 +3956,7 @@ Software}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{785.5, 358.65}, {36, 15}}</string>
+					<string>{{785, 358.65}, {36.5, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>Head</key>
@@ -4545,13 +4545,13 @@ Software}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{390.323, 217.575}, {66.1547, 15}}</string>
+					<string>{{390.323, 217.575}, {66.1548, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
 					<integer>47</integer>
 					<key>Rotation</key>
-					<real>269.30712890625</real>
+					<real>269.3076171875</real>
 					<key>Shape</key>
 					<string>AdjustableArrow</string>
 					<key>ShapeData</key>
@@ -4650,7 +4650,7 @@ Software}</string>
 					<key>ID</key>
 					<integer>46</integer>
 					<key>Rotation</key>
-					<real>90.00018310546875</real>
+					<real>90.000045776367188</real>
 					<key>Shape</key>
 					<string>AdjustableArrow</string>
 					<key>ShapeData</key>
@@ -4847,7 +4847,7 @@ Software}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{392.219, 498.325}, {62.3549, 15}}</string>
+					<string>{{392.219, 498.325}, {62.355, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>Head</key>
@@ -4860,7 +4860,7 @@ Software}</string>
 					<key>ID</key>
 					<integer>43</integer>
 					<key>Rotation</key>
-					<real>270.72921752929688</real>
+					<real>270.72970581054688</real>
 					<key>Shape</key>
 					<string>AdjustableArrow</string>
 					<key>ShapeData</key>
@@ -4939,13 +4939,13 @@ Software}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{1037.25, 486.25}, {74.5067, 15}}</string>
+					<string>{{1037.25, 486.25}, {74.5068, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>ID</key>
 					<integer>37</integer>
 					<key>Rotation</key>
-					<real>89.230979919433594</real>
+					<real>89.227127075195312</real>
 					<key>Shape</key>
 					<string>AdjustableArrow</string>
 					<key>ShapeData</key>
@@ -5031,7 +5031,7 @@ Software}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{893.5, 358.575}, {36.5001, 15}}</string>
+					<string>{{893.5, 358.575}, {36.5003, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>Head</key>
@@ -5044,7 +5044,7 @@ Software}</string>
 					<key>ID</key>
 					<integer>36</integer>
 					<key>Rotation</key>
-					<real>359.76449584960938</real>
+					<real>359.76455688476562</real>
 					<key>Shape</key>
 					<string>AdjustableArrow</string>
 					<key>ShapeData</key>
@@ -5128,7 +5128,7 @@ Software}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{572.999, 358.822}, {34.0016, 15}}</string>
+					<string>{{572.499, 358.825}, {34.5018, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>Head</key>
@@ -5141,7 +5141,7 @@ Software}</string>
 					<key>ID</key>
 					<integer>34</integer>
 					<key>Rotation</key>
-					<real>359.41873168945312</real>
+					<real>359.41876220703125</real>
 					<key>Shape</key>
 					<string>AdjustableArrow</string>
 					<key>ShapeData</key>
@@ -5238,7 +5238,7 @@ Software}</string>
 					<key>ID</key>
 					<integer>33</integer>
 					<key>Rotation</key>
-					<real>0.59860128164291382</real>
+					<real>0.59854966402053833</real>
 					<key>Shape</key>
 					<string>AdjustableArrow</string>
 					<key>ShapeData</key>
@@ -5324,7 +5324,7 @@ Software}</string>
 				</dict>
 				<dict>
 					<key>Bounds</key>
-					<string>{{355, 358.65}, {25.5999, 15}}</string>
+					<string>{{355.5, 358.65}, {25.0999, 15}}</string>
 					<key>Class</key>
 					<string>ShapedGraphic</string>
 					<key>Head</key>
@@ -5336,6 +5336,8 @@ Software}</string>
 					</dict>
 					<key>ID</key>
 					<integer>44</integer>
+					<key>Rotation</key>
+					<real>6.9662637542933226e-05</real>
 					<key>Shape</key>
 					<string>AdjustableArrow</string>
 					<key>ShapeData</key>
@@ -5982,32 +5984,11 @@ Software}</string>
 	<key>WindowInfo</key>
 	<dict>
 		<key>CurrentSheet</key>
-		<integer>2</integer>
+		<integer>0</integer>
 		<key>ExpandedCanvases</key>
-		<array>
-			<dict>
-				<key>name</key>
-				<string>Title Page</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Hardware</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Computer Flow</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Arduino Flow</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Focus Problem</string>
-			</dict>
-		</array>
+		<array/>
 		<key>Frame</key>
-		<string>{{16, 72}, {1386, 956}}</string>
+		<string>{{15, 72}, {1386, 956}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
