@@ -65,18 +65,33 @@ class Eye(object):
             print self.vservo
 
 
-    def str(self):
+    def __unicode__(self):
         return self.name
 
 
+    def settings(self):
+        print 'name:',    self.name
+        print 'active:',  self.active
+        print 'hpin:',    self.hpin
+        print 'vpin:',    self.vpin
+        print 'hmin:',    self.hmin
+        print 'hmax:',    self.hmax
+        print 'vmin:',    self.vmin
+        print 'vmax:',    self.vmax
+        print 'port:',    self.port
+        print 'hservo:',  self.hservo
+        print 'vservo:',  self.vservo
+        print 'offset:',  self.offset
+        print 'height:',  self.height
+        print 'horient:', self.horient
+        print 'vorient:', self.vorient
+
+
     def center(self):
-        return (self.hmax - self.hmin) / 2, (self.vmax - self.vmin) / 2
+        return self.hmin + ((self.hmax - self.hmin) / 2.0), self.vmin + ((self.vmax - self.vmin) / 2.0)
 
 
     def move(self, horizontal, vertical):
-        if cfg.general.debug:
-            print 'move', self.name, 'to', horizontal, vertical
-
         if self.active:
             self.hservo.send(horizontal)
             self.vservo.send(vertical)
@@ -105,19 +120,22 @@ class Eye(object):
             to scale of the axis
         """
 
+        xpercent = (self.hmax - self.hmin) * (point[0] / float(cfg.kinect.x))
+        ypercent = (self.vmax - self.vmin) * (point[1] / float(cfg.kinect.y))
+
         if self.horient == 1:                # movement scale goes from high to low
-            x = self.hmax - ((self.hmax - self.hmin) * point[0] / cfg.kinect.x)
+            x = self.hmin + xpercent
         else:                                # movement scale goes from low to high
-            x = (self.hmax - self.hmin) * point[0] / cfg.kinect.x
+            x = self.hmax - xpercent
 
 
         if self.vorient == 1:                # movement scale goes from high to low
-            y = self.vmax - ((self.vmax - self.vmin) * point[1] / cfg.kinect.y)
+            y = self.vmin + ypercent
         else:                                # movement scale goes from low to high
-            y = (self.vmax - self.vmin) * point[1] / cfg.kinect.y
+            y = self.vmax - ypercent
 
         if cfg.general.debug:
-            print distance, point, x, y, self.horient
+            print self.name, distance, point, x, y
 
         self.move(x, y)
 
