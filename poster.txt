@@ -31,7 +31,9 @@ computer, arduino, kinect, servos, solid state relay, switches, bill acceptor, s
 
 computer - connected to kinect and arduino; running ubuntu 10.10 64bit, python; polls arduino for depth and rgb feeds, parses depth for closest point, calculates angles for servos, sends message to arduino to move servos; pulls bill acceptor and trip switch data; saves depth, video, donation amount, kinect time, system time.
 
-arduino board - sketches, controlling servos, sensing input, communicating via usb / serial w/ computer.
+kinect - 640 x 480 rgb camera, infrared projector, 640 x 480 infrared camera, 4 microphones array, 30 fps, 57° horizontally / 43° vertically field of view
+
+arduino board - sketches, controlling servos and solid state relays, sensing inputs from trigger switch and bill acceptor, communicating via usb / serial w/ computer.
 
 servos - 2 servos / eye.
 
@@ -70,7 +72,7 @@ kinect, arduino, single eye on small base, 2 servos, solid state relay (only if 
 printed
 -------
 
-4' x 4' board of details
+4' x 8' board of details
 
 post cards, zazzle or vista print
 
